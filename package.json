@@ -1,0 +1,198 @@
+{
+  "name": "json-ops",
+  "displayName": "JSON Ops",
+  "description": "Minify, format, sort, flatten, convert, validate, query, and generate types/schema for JSON",
+  "version": "1.0.0",
+  "publisher": "gaurav-mathur",
+  "author": {
+    "name": "Gaurav Mathur",
+    "email": "mail.gauravmathur@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gmathurg/json-ops-extension.git"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Formatters",
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "jsonOps.minify",
+        "title": "JSON Ops: Minify"
+      },
+      {
+        "command": "jsonOps.format",
+        "title": "JSON Ops: Format (Pretty Print)"
+      },
+      {
+        "command": "jsonOps.sortKeys",
+        "title": "JSON Ops: Sort Keys"
+      },
+      {
+        "command": "jsonOps.stringify",
+        "title": "JSON Ops: Stringify (escape to string)"
+      },
+      {
+        "command": "jsonOps.minifyAndStringify",
+        "title": "JSON Ops: Minify + Stringify"
+      },
+      {
+        "command": "jsonOps.parse",
+        "title": "JSON Ops: Parse (unescape string)"
+      },
+      {
+        "command": "jsonOps.validate",
+        "title": "JSON Ops: Validate"
+      },
+      {
+        "command": "jsonOps.flatten",
+        "title": "JSON Ops: Flatten (to dot-notation)"
+      },
+      {
+        "command": "jsonOps.unflatten",
+        "title": "JSON Ops: Unflatten (from dot-notation)"
+      },
+      {
+        "command": "jsonOps.csvToJson",
+        "title": "JSON Ops: CSV to JSON"
+      },
+      {
+        "command": "jsonOps.removeNulls",
+        "title": "JSON Ops: Remove Nulls / Empty Values"
+      },
+      {
+        "command": "jsonOps.jsonToYaml",
+        "title": "JSON Ops: JSON to YAML"
+      },
+      {
+        "command": "jsonOps.yamlToJson",
+        "title": "JSON Ops: YAML to JSON"
+      },
+      {
+        "command": "jsonOps.jsonPathQuery",
+        "title": "JSON Ops: JSONPath Query"
+      },
+      {
+        "command": "jsonOps.generateTsInterface",
+        "title": "JSON Ops: Generate TypeScript Interface"
+      },
+      {
+        "command": "jsonOps.generateJsonSchema",
+        "title": "JSON Ops: Generate JSON Schema"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "jsonOps.submenu",
+          "group": "1_modification",
+          "when": "editorHasSelection || resourceLangId == json || resourceLangId == yaml || resourceLangId == csv"
+        }
+      ],
+      "jsonOps.submenu": [
+        {
+          "command": "jsonOps.format",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.minify",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.sortKeys",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.flatten",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.unflatten",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.removeNulls",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.stringify",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.minifyAndStringify",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.parse",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.validate",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.jsonPathQuery",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.generateTsInterface",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.generateJsonSchema",
+          "when": "resourceLangId == json || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.jsonToYaml",
+          "when": "resourceLangId == json"
+        },
+        {
+          "command": "jsonOps.csvToJson",
+          "when": "resourceLangId == csv || editorHasSelection"
+        },
+        {
+          "command": "jsonOps.yamlToJson",
+          "when": "resourceLangId == yaml || editorHasSelection"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "jsonOps.submenu",
+        "label": "JSON Ops"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run bundle",
+    "bundle": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "compile": "tsc -p ./",
+    "watch": "esbuild src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "package": "npx @vscode/vsce package --allow-missing-repository",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.27.4",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  }
+}

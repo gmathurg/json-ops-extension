@@ -1,0 +1,13 @@
+.gitignore
+.vscodeignore
+playwright.config.ts
+playwright-report/
+test-results/
+tests/
+src/
+tsconfig.json
+node_modules/
+*.vsix
+*.log
+out/*.map
+out/utils.js
